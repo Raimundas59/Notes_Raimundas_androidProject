@@ -1,7 +1,9 @@
 package lt.raimundas.notes;
 
-import java.time.LocalDate;
+import android.icu.text.DateTimePatternGenerator;
+
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Note {
     private  int id;
@@ -9,13 +11,15 @@ public class Note {
     private String description;
     private LocalDateTime creationDate;
     private LocalDateTime updateDate;
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
 
 
     public Note(){
 
     }
 
-    public Note(int id, String title, String description, LocalDateTime creationDate, LocalDateTime updateDate) {
+    public Note(int id, String title, String description) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -58,8 +62,8 @@ public class Note {
                 "Title: %s\nDescription:\n\t%s\n\t%s\n\t%s",
                 this.title,
                 this.description,
-                this.creationDate,
-                this.updateDate
+                this.creationDate.format(formatter),
+                this.updateDate.format(formatter)
         );
     }
 }
