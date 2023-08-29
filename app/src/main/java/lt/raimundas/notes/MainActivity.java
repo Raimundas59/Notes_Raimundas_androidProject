@@ -50,24 +50,16 @@ public class MainActivity extends AppCompatActivity {
 //        list.addAll(newlist);
 //        list.addAll(newlist);
 
+        setUpView(list);
+
+    }
+
+    private void setUpView(ArrayList<Note> list) {
         adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1,
                 list);
         binding.notesListView.setAdapter(adapter);
-
     }
 
-    private List<Note> generateDummyNotes(int notesNumber) {
-        ArrayList<Note> notes = new ArrayList<>();
-        for (int i = 1; i <= notesNumber; i++) {
-            notes.add(
-                    new Note(
-                            i,
-                            UUID.randomUUID().toString().substring(0, 10),
-                            UUID.randomUUID().toString()
-                    )
-            );
-        }
-        return notes;
-    }
+
 }
