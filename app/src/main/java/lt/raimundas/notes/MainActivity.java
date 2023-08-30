@@ -1,5 +1,6 @@
 package lt.raimundas.notes;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -81,10 +82,28 @@ public class MainActivity extends AppCompatActivity {
     private void setUpListViewItemLongClick() {
         binding.notesListView.setOnItemLongClickListener(
                 (adapterView, view, position, l) -> {
-                    Log.i(TAG, "OnListItem_LONG_Clicked:" + adapterView.getItemIdAtPosition(position));
-                    return false;
+                    Log.i(TAG, "OnListItem_LONG_Clicked:" + adapterView.getItemAtPosition(position));
+                    Note note = (Note) adapterView.getItemAtPosition(position);
+                    showRemoveAlertDialog(note);
+                    return true;
                 }
         );
 
+    }
+
+    private void showRemoveAlertDialog(Note note) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder
+                .setMessage("Do you really want to remove this item?")
+                .setPositiveButton("Yes", (dialogInterface, i) -> {
+                    removeNoteFromList(note);
+                })
+                        .setNegativeButton("No", null)
+                .show();
+    }
+
+    private void removeNoteFromList(Note note) {
+        notes.remove(note);
+        adapter.notifyDataSetChanged();
     }
 }
