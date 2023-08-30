@@ -3,6 +3,7 @@ package lt.raimundas.notes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -77,12 +78,16 @@ public class MainActivity extends AppCompatActivity {
                 (adapterView, view, position, l) -> {
                     Log.i(TAG, "OnListItemClicked" + adapterView.getItemIdAtPosition(position));
                     Log.i(TAG, "OnListItemClicked" + position);
+                    Note note  = (Note)adapterView.getItemAtPosition(position);
+                    openNoteDetailsActivity(note);
 
 //                    adapterView.getItemIdAtPosition(position)
 
                 }
         );
     }
+
+
 
     private void setUpListViewItemLongClick() {
         binding.notesListView.setOnItemLongClickListener(
@@ -99,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
         binding.floatingActionButton.setOnClickListener(
                 view -> {
-                    showSnacBar("FAB  was clicked");
+                   openNoteDetailsActivity(new Note());
                 }
         );
     }
@@ -129,5 +134,26 @@ public class MainActivity extends AppCompatActivity {
         notes.remove(note);
         adapter.notifyDataSetChanged();
         showSnacBar("Note with id:" + note.getId()+ "was removed");
+    }
+    private void openNoteDetailsActivity(Note note) {
+        Intent intent = new Intent(this,NoteDetails.class);
+        intent.putExtra("Id",note.getId());
+        intent.putExtra("title",note.getTitle());
+        intent.putExtra("description",note.getDescription());
+        intent.putExtra("creationDate",note.getCreationDate());
+        intent.putExtra("creationDate",note.getCreationDate());
+        intent.putExtra("updateDate",note.getUpdateDate());
+        startActivity(intent);
+
+
+//        Intent intent = new Intent(this,NoteDetails.class);
+//        Intent intent =  new Intent();
+//        Intent sendIntent = new Intent();
+//        sendIntent.setAction(Intent.ACTION_SEND);
+//        sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+//        sendIntent.setType("text/plain");
+//
+//        Intent shareIntent = Intent.createChooser(sendIntent, null);
+//        startActivity(intent);
     }
 }
