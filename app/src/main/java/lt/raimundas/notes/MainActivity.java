@@ -7,14 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
 
 import lt.raimundas.notes.databinding.ActivityMainBinding;
 
@@ -32,7 +26,8 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setUpListView();
-        setUpListViewListener();
+        setUpListViewItemClick();
+        setUpListViewItemLongClick();
 //        binding.myTextView.setText("Kokia graži diena ir koks aš nuostabus");
 //        binding.myTextView.setTextSize(55);
 //        binding.myTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -70,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         binding.notesListView.setAdapter(adapter);
     }
 
-    private void setUpListViewListener() {
+    private void setUpListViewItemClick() {
 
         binding.notesListView.setOnItemClickListener(
                 (adapterView, view, position, l) -> {
@@ -83,5 +78,13 @@ public class MainActivity extends AppCompatActivity {
         );
     }
 
+    private void setUpListViewItemLongClick() {
+        binding.notesListView.setOnItemLongClickListener(
+                (adapterView, view, position, l) -> {
+                    Log.i(TAG, "OnListItem_LONG_Clicked:" + adapterView.getItemIdAtPosition(position));
+                    return false;
+                }
+        );
 
+    }
 }
