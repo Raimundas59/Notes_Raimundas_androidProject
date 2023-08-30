@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 
 import lt.raimundas.notes.databinding.ActivityMainBinding;
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         setUpListView();
         setUpListViewItemClick();
         setUpListViewItemLongClick();
+        setUpFloatingActionButtonClick();
 //        binding.myTextView.setText("Kokia graži diena ir koks aš nuostabus");
 //        binding.myTextView.setTextSize(55);
 //        binding.myTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -50,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
 //        list.addAll(newlist);
 
     }
+
+
 
 
     private void setUpListView() {
@@ -90,6 +95,24 @@ public class MainActivity extends AppCompatActivity {
         );
 
     }
+    private void setUpFloatingActionButtonClick() {
+
+        binding.floatingActionButton.setOnClickListener(
+                view -> {
+                    showSnacBar("FAB  was clicked");
+                }
+        );
+    }
+
+    private void showSnacBar(String message) {
+        Snackbar
+                .make(
+                binding.notesListView,
+                "Fab was clicked",
+                Snackbar.LENGTH_LONG
+        )
+                .show();
+    }
 
     private void showRemoveAlertDialog(Note note) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -105,5 +128,6 @@ public class MainActivity extends AppCompatActivity {
     private void removeNoteFromList(Note note) {
         notes.remove(note);
         adapter.notifyDataSetChanged();
+        showSnacBar("Note with id:" + note.getId()+ "was removed");
     }
 }
